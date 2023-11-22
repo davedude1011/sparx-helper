@@ -1,0 +1,14 @@
+{
+    "name": "sparx",
+    "version": "1",
+    "description": "Your description here",
+    "content_scripts": [
+        {
+            "matches": ["https://www.sparxmaths.uk/*"],
+            "js": ["function.js"],
+            "run_at": "document_end"
+        }
+    ],
+    "host_permissions": ["https://www.sparxmaths.uk/*"],
+    "manifest_version": 3
+}
