@@ -1,6 +1,6 @@
 PageStates = {
     "bookworks": `<style> ._Content_fyjwi_7 { display: flex; justify-content: center; } .block { width: 95%; height: fit-content; overflow-y: scroll; } .block-title { font-size: x-large; font-weight: bold; } .block-title:not(:first-of-type) { margin-top: 20px; } .block-shell { width: 100%; display: flex; flex-direction: column; align-items: center; } .block-inner { width: 95%; } .block-inner-text { background-color: var(--colours-transparent-darken); border: 2px dashed var(--colours-interactable); border-top: none; border-bottom: none; padding: 15px; padding-top: 5px; padding-left: 25px; } .block-inner-title { background-color: var(--colours-transparent-darken); border: 2px dashed var(--colours-interactable); border-top: none; border-bottom: none; font-weight: bold; padding: 15px; padding-bottom: 5px; } .block-inner:nth-of-type(1) .block-inner-title { border: 2px dashed var(--colours-interactable); border-bottom: none; border-top-left-radius: 10px; border-top-right-radius: 10px; } .block-inner:nth-last-child(1) .block-inner-text { border: 2px dashed var(--colours-interactable); border-top: none; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; margin-bottom: 5px; } </style> <div class="_Content_fyjwi_7"> <!-- ADD CONTENT HERE --> <div class="block"> </div> </div>`,
-    "settings": '<style> ._Content_fyjwi_7 { display: flex; align-items: center; flex-direction: column; } .setting { padding: 20px; color: var(--colours-text-body); width: 90%; } legend { font-weight: bold; font-size: larger; } .setting-title { font-size: large; margin-right: 5px; } </style> <div class="_Content_fyjwi_7"> <!-- ADD CONTENT HERE --> <br><br> <fieldset class="setting"> <legend>Features:</legend> <div> <label for="RemoveCompletedHomework" class="setting-title">Remove Completed Homeworks</label> <input id="RemoveCompletedHomework" type="checkbox"> </div><br> <div> <label for="AddUserSelect" class="setting-title">Selectable Text</label> <input id="AddUserSelect" type="checkbox"> </div><br> <div> <label for="Timers" class="setting-title">Timers</label> <input id="Timers" type="checkbox"> </div><br> <div> <label for="NameMuffler" class="setting-title">Change Username</label> <input type="text" placeholder="Leave blank to turn off" id="NameMuffler"> </div> </fieldset> <br><br> <fieldset class="setting"> <legend>Themes:</legend> <div> <label for="light" class="setting-title">Light</label> <input id="light" type="checkbox"> </div><br> <div> <label for="dusk" class="setting-title">Dusk</label> <input id="dusk" type="checkbox"> </div> </fieldset> </div>'
+    "settings": '<style> ._Content_fyjwi_7 { display: flex; align-items: center; flex-direction: column; } .setting { padding: 20px; color: var(--colours-text-body); width: 90%; } legend { font-weight: bold; font-size: larger; } .setting-title { font-size: large; margin-right: 5px; } </style> <div class="_Content_fyjwi_7"> <!-- ADD CONTENT HERE --> <br><br> <fieldset class="setting"> <legend>Features:</legend> <div> <label for="RemoveCompletedHomework" class="setting-title">Remove Completed Homeworks</label> <input id="RemoveCompletedHomework" type="checkbox"> </div><br> <div> <label for="AddUserSelect" class="setting-title">Selectable Text</label> <input id="AddUserSelect" type="checkbox"> </div><br> <div> <label for="Timers" class="setting-title">Timers</label> <input id="Timers" type="checkbox"> </div><br> <div> <label for="NameMuffler" class="setting-title">Change Username</label> <input type="text" placeholder="Leave blank to turn off" id="NameMuffler"> </div><br> <div> <label for="Canvas" class="setting-title">Popup Canvas (right click)</label> <input id="Canvas" type="checkbox"> </div> </fieldset> <br><br> <fieldset class="setting"> <legend>Themes:</legend> <div> <label for="light" class="setting-title">Light</label> <input id="light" type="checkbox"> </div><br> <div> <label for="dusk" class="setting-title">Dusk</label> <input id="dusk" type="checkbox"> </div> </fieldset> </div>'
 }
 function RemoveCompletedHomework() {
     if (window.location.toString().includes("homework")) {
@@ -154,6 +154,7 @@ function SettingsFunctions() {
             "AddUserSelect": true,
             "Timers": true,
             "NameMuffler": "",
+            "Canvas": true,
         }
 
         for (Setting in UserPrefs) {
@@ -509,6 +510,71 @@ function CSSboiler() {
 
     document.head.appendChild(NewStyle)
 }
+function InitializeCanvas() {
+    document.addEventListener('contextmenu', function(event) {
+        event.preventDefault();
+    
+        let canvas = document.querySelector("canvas.canvas");
+    
+        if (canvas == undefined || canvas == null) {
+            console.log("JIHJLIUHIHBLHBGI")
+            // Create a new canvas
+            let newCanvas = document.createElement("canvas");
+            newCanvas.classList.add("canvas");
+            document.body.appendChild(newCanvas);
+    
+            newCanvas.style.position = "absolute";
+            newCanvas.style.top = "0";
+            newCanvas.style.left = "0";
+            document.body.style.margin = 0;
+            newCanvas.style.backgroundColor = "rgba(240, 248, 255, 0.5)";
+    
+    
+            // Get the 2D drawing context
+            let ctx = newCanvas.getContext("2d");
+            resize();
+            // last known position
+            var pos = { x: 0, y: 0 };
+    
+            window.addEventListener('resize', resize);
+            document.addEventListener('mousemove', draw);
+            document.addEventListener('mousedown', setPosition);
+            document.addEventListener('mouseenter', setPosition);
+    
+            // new position from mouse event
+            function setPosition(e) {
+              pos.x = e.clientX;
+              pos.y = e.clientY;
+            }
+    
+            // resize canvas
+            function resize() {
+              ctx.canvas.width = window.innerWidth;
+              ctx.canvas.height = window.innerHeight;
+            }
+    
+            function draw(e) {
+              // mouse left button must be pressed
+              if (e.buttons !== 1) return;
+            
+              ctx.beginPath(); // begin
+            
+              ctx.lineWidth = 5;
+              ctx.lineCap = 'round';
+              ctx.strokeStyle = '#c0392b';
+            
+              ctx.moveTo(pos.x, pos.y); // from
+              setPosition(e);
+              ctx.lineTo(pos.x, pos.y); // to
+            
+              ctx.stroke(); // draw it!
+            }
+        }
+        else {
+            canvas.remove()
+        }
+    });
+}
 
 const init = function() {
     StartComplete = false
@@ -523,6 +589,7 @@ function StartLoop() {
         "AddUserSelect": true,  
         "Timers": true,
         "NameMuffler": "",
+        "Canvas": true,
     }
     localStorage.setItem("UserPrefs", JSON.stringify(UserPrefs))
 
@@ -545,6 +612,7 @@ function StartLoop() {
             if (UserPrefs["AddUserSelect"] == true || UserPrefs["AddUserSelect"] == "true" ) { AddUserSelect() }
             if (UserPrefs["Timers"] == true || UserPrefs["Timers"] == "true" ) { AddTimers() }
             if (UserPrefs["NameMuffler"] != "") { NameMuffler() }
+            if (UserPrefs["Canvas"] == true || UserPrefs["Canvas"] == "true" ) { InitializeCanvas() }
             CSSboiler()
             
             StartComplete = true
@@ -562,68 +630,3 @@ function Loop() {
 }
 setInterval(Loop, 500) 
 
-document.addEventListener('keydown', function (event) {
-    if (event.key == 'Tab') {
-        event.preventDefault();
-
-        let canvas = document.querySelector("canvas.canvas");
-
-        if (canvas == undefined || canvas == null) {
-            console.log("JIHJLIUHIHBLHBGI")
-            // Create a new canvas
-            let newCanvas = document.createElement("canvas");
-            newCanvas.classList.add("canvas");
-            document.body.appendChild(newCanvas);
-
-            newCanvas.style.position = "absolute";
-            newCanvas.style.top = "0";
-            newCanvas.style.left = "0";
-            document.body.style.margin = 0;
-            newCanvas.style.backgroundColor = "rgba(240, 248, 255, 0.5)";
-
-
-            // Get the 2D drawing context
-            let ctx = newCanvas.getContext("2d");
-            resize();
-            // last known position
-            var pos = { x: 0, y: 0 };
-
-            window.addEventListener('resize', resize);
-            document.addEventListener('mousemove', draw);
-            document.addEventListener('mousedown', setPosition);
-            document.addEventListener('mouseenter', setPosition);
-
-            // new position from mouse event
-            function setPosition(e) {
-              pos.x = e.clientX;
-              pos.y = e.clientY;
-            }
-
-            // resize canvas
-            function resize() {
-              ctx.canvas.width = window.innerWidth;
-              ctx.canvas.height = window.innerHeight;
-            }
-
-            function draw(e) {
-              // mouse left button must be pressed
-              if (e.buttons !== 1) return;
-            
-              ctx.beginPath(); // begin
-            
-              ctx.lineWidth = 5;
-              ctx.lineCap = 'round';
-              ctx.strokeStyle = '#c0392b';
-            
-              ctx.moveTo(pos.x, pos.y); // from
-              setPosition(e);
-              ctx.lineTo(pos.x, pos.y); // to
-            
-              ctx.stroke(); // draw it!
-            }
-        }
-        else {
-            canvas.remove()
-        }
-    }
-});
