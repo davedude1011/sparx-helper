@@ -293,11 +293,11 @@ function GetAnswers() {
 
     let Answers = []
 
-    let Wrapper = document.querySelector("._QuestionWrapper_1ej87_58")
+    let Wrapper = document.querySelector("._QuestionWrapper_1ej87_58") || document.querySelector("._QuestionContainer_kvqo1_1")
 
-    let Options = Wrapper.querySelectorAll("._OptionSelected_1luff_517") //dont even ask lol :o
-    let Cards = Wrapper.querySelectorAll("._CardContent_1luff_653") //dont even ask lol :o
-    let Inputs = Wrapper.querySelectorAll("._TextField_1luff_299") //dont even ask lol :o
+    let Options = Wrapper.querySelectorAll('[class^="_OptionSelected_"]'); //dont even ask lol :o
+    let Cards = Wrapper.querySelectorAll('[class^="_CardContent_"]'); //dont even ask lol :o
+    let Inputs = Wrapper.querySelectorAll('[class^="_TextField_"]'); //dont even ask lol :o
 
     if (Options.length > 0) {
         for (let i = 0; i < Options.length; i++) {
@@ -331,7 +331,9 @@ function BaseButtonClick() {
     try {
         document.querySelector("._ButtonBase_10evl_1._ButtonContained_10evl_81").onclick = function() {
             if (this.textContent == "Answer") {
-                Question = document.querySelector("._TextElement_1luff_67").innerHTML
+                QuestionElement = document.querySelector('#before [class^="_TextElement_"]')
+                Question = QuestionElement.innerHTML
+                console.log(Question)
             }
             if (this.textContent == "Submit answer") {
                 let NewBookwork = {
@@ -504,11 +506,46 @@ function CSSboiler() {
     *::-webkit-scrollbar-track {
         background: transparent;
     }
+    .selected-option {
+        border: 4px dashed orange;
+        border-radius: 5px
+    }
     `
     let NewStyle = document.createElement("style")
     NewStyle.innerHTML = NewStyleText
 
     document.head.appendChild(NewStyle)
+}
+
+function BookworkCheck() {
+    try {
+        let Code = document.querySelector("._Chip_bu06u_1").textContent.split(" ")[1]
+        if (Code != undefined && Code != null) {
+            let BookworkArray = JSON.parse(localStorage.getItem("BookworkArray"))
+
+            var FittingHTML = []
+            for (let i = 0; i < BookworkArray.length; i++) {
+                if (BookworkArray[i].code == Code) {
+                    FittingHTML.push(BookworkArray[i].answer)
+                }
+            }
+
+            let OptionOuters = document.querySelectorAll('[class^="_WACGridOption_"]')
+            for (let i = 0; i < OptionOuters.length; i++) {
+                let EveryDiv = OptionOuters[i].getElementsByTagName("*")
+                for (let j = 0; j < EveryDiv.length; j++) {
+                    for (let o = 0; o < FittingHTML.length; o++) {
+                        if (EveryDiv[j].innerHTML == FittingHTML[o]) {
+                            EveryDiv[j].closest('[class^="_WACGridOption_"]').classList.add("selected-option")
+                        }
+                    }
+                }
+            }
+        }
+    }
+    catch{}
+
+    console.log("FittingHTML", FittingHTML)
 }
 function InitializeCanvas() {
     document.addEventListener('contextmenu', function(event) {
@@ -627,6 +664,7 @@ function StartLoop() {
 setInterval(StartLoop, 100) 
 function Loop() {
     BaseButtonClick()
+    BookworkCheck()
 }
 setInterval(Loop, 500) 
 
