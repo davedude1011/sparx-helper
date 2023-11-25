@@ -364,7 +364,7 @@ function BaseButtonClick() {
                             let Result = document.querySelector('[class^="_ResultMessage_"]').textContent
                             KeepChecking = false
         
-                            if (Result == "Correct") {
+                            if (Result == "Correct!") {
                                 BookworkArray.push(NewBookwork)
                                 localStorage.setItem("BookworkArray", JSON.stringify(BookworkArray))
                             }
