@@ -1,5 +1,5 @@
 PageStates = {
-    "bookworks": `<style> ._Content_fyjwi_7 { display: flex; justify-content: center; } .block { width: 95%; height: fit-content; overflow-y: scroll; } .block-title { font-size: x-large; font-weight: bold; } .block-title:not(:first-of-type) { margin-top: 20px; } .block-shell { width: 100%; display: flex; flex-direction: column; align-items: center; } .block-inner { width: 95%; } .block-inner-text { background-color: var(--colours-transparent-darken); border: 2px dashed var(--colours-interactable); border-top: none; border-bottom: none; padding: 15px; padding-top: 5px; padding-left: 25px; } .block-inner-title { background-color: var(--colours-transparent-darken); border: 2px dashed var(--colours-interactable); border-top: none; border-bottom: none; font-weight: bold; padding: 15px; padding-bottom: 5px; } .block-inner:nth-of-type(1) .block-inner-title { border: 2px dashed var(--colours-interactable); border-bottom: none; border-top-left-radius: 10px; border-top-right-radius: 10px; } .block-inner:nth-last-child(1) .block-inner-text { border: 2px dashed var(--colours-interactable); border-top: none; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; margin-bottom: 5px; } </style> <div class="_Content_fyjwi_7"> <!-- ADD CONTENT HERE --> <div class="block"> </div> </div>`,
+    "bookworks": `<style>._Content_fyjwi_7{display:flex;justify-content:center}.block{width:95%;height:fit-content;overflow-y:scroll}.block-title{font-size:x-large;font-weight:700}.block-title:not(:first-of-type){margin-top:20px}.block-shell{width:100%;display:flex;flex-direction:column;align-items:center}.block-inner{width:95%}.block-inner-text{background-color:var(--colours-transparent-darken);border:2px dashed var(--colours-interactable);border-top:none;border-bottom:none;padding:15px;padding-top:5px;padding-left:25px}.block-inner-title{background-color:var(--colours-transparent-darken);border:2px dashed var(--colours-interactable);border-top:none;border-bottom:none;font-weight:700;padding:15px;padding-bottom:5px}.block-inner:nth-of-type(1) .block-inner-title{border:2px dashed var(--colours-interactable);border-bottom:none;border-top-left-radius:10px;border-top-right-radius:10px}.block-inner:nth-last-child(1) .block-inner-text{border:2px dashed var(--colours-interactable);border-top:none;border-bottom-left-radius:10px;border-bottom-right-radius:10px;margin-bottom:5px}.clear-bookworks{width:fit-content;padding:15px;background-color:var(--colours-interactable);display:flex;justify-content:center;align-items:center;overflow:hidden;white-space:nowrap;color:#fff;border-radius:5px;cursor:pointer;margin-top:15px}</style><div class="_Content_fyjwi_7"><button class="clear-bookworks">Clear Bookworks</button><br><br><div class="block"></div></div>`,
     "settings": '<style> ._Content_fyjwi_7 { display: flex; align-items: center; flex-direction: column; } .setting { padding: 20px; color: var(--colours-text-body); width: 90%; } legend { font-weight: bold; font-size: larger; } .setting-title { font-size: large; margin-right: 5px; } </style> <div class="_Content_fyjwi_7"> <!-- ADD CONTENT HERE --> <br><br> <fieldset class="setting"> <legend>Features:</legend> <div> <label for="RemoveCompletedHomework" class="setting-title">Remove Completed Homeworks</label> <input id="RemoveCompletedHomework" type="checkbox"> </div><br> <div> <label for="AddUserSelect" class="setting-title">Selectable Text</label> <input id="AddUserSelect" type="checkbox"> </div><br> <div> <label for="Timers" class="setting-title">Timers</label> <input id="Timers" type="checkbox"> </div><br> <div> <label for="NameMuffler" class="setting-title">Change Username</label> <input type="text" placeholder="Leave blank to turn off" id="NameMuffler"> </div><br> <div> <label for="Canvas" class="setting-title">Popup Canvas (right click)</label> <input id="Canvas" type="checkbox"> </div> </fieldset> <br><br> <fieldset class="setting"> <legend>Themes:</legend> <div> <label for="light" class="setting-title">Light</label> <input id="light" type="checkbox"> </div><br> <div> <label for="dusk" class="setting-title">Dusk</label> <input id="dusk" type="checkbox"> </div> </fieldset> </div>'
 }
 function RemoveCompletedHomework() {
@@ -60,6 +60,7 @@ function AddMenuItem(title, path) {
             }
     
             if (path == "bookworks") {
+                document.querySelector(".clear-bookworks").onclick = ClearBookworks
                 document.getElementById("bookworks").querySelector(".block").innerHTML = ""
                 GetBookworks()
             }
@@ -158,7 +159,6 @@ function SettingsFunctions() {
         }
 
         for (Setting in UserPrefs) {
-            console.log(Setting, UserPrefs[Setting])
             if (Setting == "NameMuffler") {
                 document.querySelector(`#${Setting}`).value = UserPrefs[Setting]
                 document.querySelector(`#${Setting}`).addEventListener("input", function() {
@@ -327,17 +327,24 @@ function GetAnswers() {
 }
 var Question
 function BaseButtonClick() {
-    console.log("FLAPODOODLE")
+    //console.log("FLAPODOODLE")
     try {
         document.querySelector("._ButtonBase_10evl_1._ButtonContained_10evl_81").onclick = function() {
             if (this.textContent == "Answer") {
-                QuestionElement = document.querySelector('#before [class^="_TextElement_"]')
-                Question = QuestionElement.innerHTML
-                console.log(Question)
+                try {
+                    QuestionElement = document.querySelector('#before [class^="_TextElement_"]')
+                    Question = QuestionElement.innerHTML
+                }
+                catch {
+                    QuestionElement = document.querySelector('[class^="_TextElement_"]')
+                    Question = QuestionElement.innerHTML
+                }
             }
             if (this.textContent == "Submit answer") {
+                let NewCode = document.querySelector("._Chip_bu06u_1").textContent.split(": ")[1]
+                
                 let NewBookwork = {
-                    "code": document.querySelector("._Chip_bu06u_1").textContent.split(": ")[1],
+                    "code": NewCode,
                     "question": Question,
                     "answer": GetAnswers(),
                     "timestamp": GetCurrentTime()
@@ -349,20 +356,32 @@ function BaseButtonClick() {
                     BookworkArrayString = localStorage.getItem("BookworkArray")
                 }
                 let BookworkArray = JSON.parse(BookworkArrayString)
+                var KeepChecking = true
+
+                setInterval(function() {
+                    if (KeepChecking) {
+                        try {
+                            let Result = document.querySelector('[class^="_ResultMessage_"]').textContent
+                            KeepChecking = false
         
-                BookworkArray.push(NewBookwork)
-        
-                localStorage.setItem("BookworkArray", JSON.stringify(BookworkArray))
+                            if (Result == "Correct") {
+                                BookworkArray.push(NewBookwork)
+                                localStorage.setItem("BookworkArray", JSON.stringify(BookworkArray))
+                            }
+                            else {
+                                console.log("L")
+                            }
+                        }
+                        catch {}
+                    }
+                }, 10)
             }
         }
     }
-    catch {
-        console.log("No Submit Button Found!")
-    }
+    catch {}
 }
 
 function AddPseudoPages() {
-    console.log("################################")
     let isMath
     try {
         isMath = true
@@ -544,8 +563,6 @@ function BookworkCheck() {
         }
     }
     catch{}
-
-    console.log("FittingHTML", FittingHTML)
 }
 function InitializeCanvas() {
     document.addEventListener('contextmenu', function(event) {
@@ -554,7 +571,6 @@ function InitializeCanvas() {
         let canvas = document.querySelector("canvas.canvas");
     
         if (canvas == undefined || canvas == null) {
-            console.log("JIHJLIUHIHBLHBGI")
             // Create a new canvas
             let newCanvas = document.createElement("canvas");
             newCanvas.classList.add("canvas");
@@ -612,6 +628,23 @@ function InitializeCanvas() {
         }
     });
 }
+function LinkCheck() {
+    try {
+        let Titles = document.querySelectorAll('[class^="_Title_"]')
+        for (let i = 0; i < Titles.length; i++) {
+            if (Titles[i].textContent == "Something has gone wrong.") {
+                window.open("https://www.sparxmaths.uk/student/homework", "_self")
+            }
+        }
+    }
+    catch{}
+}
+
+function ClearBookworks() {
+    console.log("CLEARING BOOKWORKS")
+    localStorage.setItem("BookworkArray", JSON.stringify([]))
+    document.getElementById("bookworks").querySelector(".block").innerHTML = ""
+}
 
 const init = function() {
     StartComplete = false
@@ -665,6 +698,7 @@ setInterval(StartLoop, 100)
 function Loop() {
     BaseButtonClick()
     BookworkCheck()
+    LinkCheck()
 }
-setInterval(Loop, 500) 
+setInterval(Loop, 250) 
 
