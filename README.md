@@ -25,4 +25,5 @@ Sparx Helper is a Chrome extension designed to enhance your Sparx Maths journey 
 4. Select "Extensions" from the menu.
 5. Click on the ".zip" button.
 6. Locate the downloaded .zip file, (most likely in your downloads or files folder), and select it
+
 (Side Note, for mobile use, you can only use the extension on the kiwi browser.)
