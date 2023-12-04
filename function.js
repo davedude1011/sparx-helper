@@ -1,10 +1,12 @@
 PageStates = {
     "bookworks": `<style>._Content_fyjwi_7{display:flex;justify-content:center}.block{width:95%;height:fit-content;overflow-y:scroll}.block-title{font-size:x-large;font-weight:700}.block-title:not(:first-of-type){margin-top:20px}.block-shell{width:100%;display:flex;flex-direction:column;align-items:center}.block-inner{width:95%}.block-inner-text{background-color:var(--colours-transparent-darken);border:2px dashed var(--colours-interactable);border-top:none;border-bottom:none;padding:15px;padding-top:5px;padding-left:25px}.block-inner-title{background-color:var(--colours-transparent-darken);border:2px dashed var(--colours-interactable);border-top:none;border-bottom:none;font-weight:700;padding:15px;padding-bottom:5px}.block-inner:nth-of-type(1) .block-inner-title{border:2px dashed var(--colours-interactable);border-bottom:none;border-top-left-radius:10px;border-top-right-radius:10px}.block-inner:nth-last-child(1) .block-inner-text{border:2px dashed var(--colours-interactable);border-top:none;border-bottom-left-radius:10px;border-bottom-right-radius:10px;margin-bottom:5px}.clear-bookworks{width:fit-content;padding:15px;background-color:var(--colours-interactable);display:flex;justify-content:center;align-items:center;overflow:hidden;white-space:nowrap;color:#fff;border-radius:5px;cursor:pointer;margin-top:15px}</style><div class="_Content_fyjwi_7"><button class="clear-bookworks">Clear Bookworks</button><br><br><div class="block"></div></div>`,
-    "settings": '<style> ._Content_fyjwi_7 { display: flex; align-items: center; flex-direction: column; } .setting { padding: 20px; color: var(--colours-text-body); width: 90%; } legend { font-weight: bold; font-size: larger; } .setting-title { font-size: large; margin-right: 5px; } </style> <div class="_Content_fyjwi_7"> <!-- ADD CONTENT HERE --> <br><br> <fieldset class="setting"> <legend>Features:</legend> <div> <label for="RemoveCompletedHomework" class="setting-title">Remove Completed Homeworks</label> <input id="RemoveCompletedHomework" type="checkbox"> </div><br> <div> <label for="AddUserSelect" class="setting-title">Selectable Text</label> <input id="AddUserSelect" type="checkbox"> </div><br> <div> <label for="Timers" class="setting-title">Timers</label> <input id="Timers" type="checkbox"> </div><br> <div> <label for="NameMuffler" class="setting-title">Change Username</label> <input type="text" placeholder="Leave blank to turn off" id="NameMuffler"> </div><br> <div> <label for="Canvas" class="setting-title">Popup Canvas (right click)</label> <input id="Canvas" type="checkbox"> </div> </fieldset> <br><br> <fieldset class="setting"> <legend>Themes:</legend> <div> <label for="light" class="setting-title">Light</label> <input id="light" type="checkbox"> </div><br> <div> <label for="dusk" class="setting-title">Dusk</label> <input id="dusk" type="checkbox"> </div> </fieldset> </div>'
+    "settings": '<style> ._Content_fyjwi_7 { display: flex; align-items: center; flex-direction: column; } .setting { padding: 20px; color: var(--colours-text-body); width: 90%; } legend { font-weight: bold; font-size: larger; } .setting-title { font-size: large; margin-right: 5px; } </style> <div class="_Content_fyjwi_7"> <!-- ADD CONTENT HERE --> <br><br> <fieldset class="setting"> <legend>Features:</legend> <div> <label for="RemoveCompletedHomework" class="setting-title">Remove Completed Homeworks</label> <input id="RemoveCompletedHomework" type="checkbox"> </div><br> <div> <label for="AddUserSelect" class="setting-title">Selectable Text</label> <input id="AddUserSelect" type="checkbox"> </div><br> <div> <label for="Timers" class="setting-title">Timers</label> <input id="Timers" type="checkbox"> </div><br> <div> <label for="NameMuffler" class="setting-title">Change Username</label> <input type="text" placeholder="Leave blank to turn off" id="NameMuffler"> </div><br> <div> <label for="Canvas" class="setting-title">Popup Canvas (right click)</label> <input id="Canvas" type="checkbox"> </div> </fieldset> <br><br> <fieldset class="setting"> <legend>Themes:</legend> <div> <label for="light" class="setting-title">Light</label> <input id="light" type="checkbox"> </div><br> <div> <label for="dusk" class="setting-title">Dusk</label> <input id="dusk" type="checkbox"> </div> </fieldset> </div>',
+    "tools": '<style>._Content_fyjwi_7{width:100vw;height:100vh}</style><div class="_Content_fyjwi_7"><iframe src="https://www.desmos.com/scientific" style="width:100vw;height:100vh"></iframe></div>',
+    "ai": '<style>._Content_fyjwi_7{width:100vw;height:100vh}</style><div class="_Content_fyjwi_7"><iframe src="https://Davedude1011-dump.github.io/sparx-helper-iframe/index.html" style="width:100vw;height:100vh"></iframe></div>'
 }
 function RemoveCompletedHomework() {
     if (window.location.toString().includes("homework")) {
-        let AllHomeworks = document.querySelector("._AccordionRoot_9fvag_3").children
+        let AllHomeworks = document.querySelector('[class*="_AccordionRoot_"]').children
         for (let i = 0; i < AllHomeworks.length; i++) {
             let Child = AllHomeworks[i]
             if (Child.classList.contains("_Completed_9fvag_50") || Child.textContent.includes("Introducing Sparx Maths")) {
@@ -51,7 +53,7 @@ function AddMenuItem(title, path) {
                 history.pushState({}, '', newUrl);
             }
     
-            let PseudoPages = document.querySelectorAll("#bookworks, #settings, #before, #back")
+            let PseudoPages = document.querySelectorAll("#bookworks, #settings, #ai, #tools, #before, #back")
             for (let i = 0; i < PseudoPages.length; i++) {
                 let CurrentPage = PseudoPages[i]
     
@@ -69,9 +71,9 @@ function AddMenuItem(title, path) {
             }
         }
     }
-    document.querySelector("._BannerLeft_4fjt9_20 ._SMLogo_4fjt9_40").onclick = function(){ window.open("https://www.sparxmaths.uk/student/homework", "_self") }
+    document.querySelector('[class*="_BannerLeft_"] [class*="_SMLogo_"]').onclick = function(){ window.open("https://www.sparxmaths.uk/student/homework", "_self") }
     try {
-        document.querySelector("._BannerLeft_4fjt9_20 ._BackButton_1iso5_1").onclick = function(){ window.open("https://www.sparxmaths.uk/student/homework", "_self") }
+        document.querySelector('[class*="_BannerLeft_"] [class*="_BackButton_"]').onclick = function(){ window.open("https://www.sparxmaths.uk/student/homework", "_self") }
     }
     catch{}
 
@@ -83,7 +85,7 @@ function AddMenuItem(title, path) {
     NewDiv.classList.add("_DropdownMenuItem_tgmt4_59")
 
     NewA.appendChild(NewDiv)
-    document.querySelector("._DropdownMenuContent_tgmt4_31").insertBefore(NewA, (document.querySelectorAll("._DropdownMenuItem_tgmt4_59"))[document.querySelectorAll("._DropdownMenuItem_tgmt4_59").length- 1])
+    document.querySelector('[class*="_DropdownMenuContent_"]').insertBefore(NewA, (document.querySelectorAll('[class*="_DropdownMenuItem_"]'))[document.querySelectorAll('[class*="_DropdownMenuItem_"]').length- 1])
 
     RemoveUselessMenuItems()
 }
@@ -148,7 +150,7 @@ if (CurrentUI == "ERROR") {
 UpdateUIcolors(CurrentUI)
 var OGname
 function SettingsFunctions() {
-    OGname = document.querySelector("._HiddenAt_gk0gx_1").textContent
+    OGname = document.querySelector('[class*="_HiddenAt_"]').textContent
     function Reload() {
         let UserPrefs = JSON.parse(localStorage.getItem("UserPrefs")) || {
             "RemoveCompletedHomework": true,
@@ -165,10 +167,10 @@ function SettingsFunctions() {
                     UserPrefs[this.id] = this.value
                     localStorage.setItem("UserPrefs", JSON.stringify(UserPrefs))
                     if (this.value == "") {
-                        document.querySelector("._HiddenAt_gk0gx_1").textContent = OGname
+                        document.querySelector('[class*="_HiddenAt_"]').textContent = OGname
                     }
                     else {
-                        document.querySelector("._HiddenAt_gk0gx_1").textContent = this.value
+                        document.querySelector('[class*="_HiddenAt_"]').textContent = this.value
                     }
                 })
             }
@@ -287,61 +289,74 @@ function AddBookworkElements(code, question, answer, timestamp) {
     }
 }
 
-function GetAnswers() {
+function GetAnswers(Debugging=false) {
     // runs after the submit button is pressed
     // checks for different input types, on finding them adds their answer to an array
 
     let Answers = []
 
-    let Wrapper = document.querySelector("._QuestionWrapper_1ej87_58") || document.querySelector("._QuestionContainer_kvqo1_1")
+    let Wrapper = document.querySelector('[class*="_QuestionWrapper_"]')
 
-    let Options = Wrapper.querySelectorAll('[class^="_OptionSelected_"]'); //dont even ask lol :o
-    let Cards = Wrapper.querySelectorAll('[class^="_CardContent_"]'); //dont even ask lol :o
-    let Inputs = Wrapper.querySelectorAll('[class^="_TextField_"]'); //dont even ask lol :o
+    let Options = Wrapper.querySelectorAll('[class*="_OptionSelected_"]'); //dont even ask lol :o
+    let Cards = Wrapper.querySelectorAll('[class*="_CardContent_"]'); //dont even ask lol :o
+    let Inputs = Wrapper.querySelectorAll('[class*="_TextField_"]'); //dont even ask lol :o
 
     if (Options.length > 0) {
         for (let i = 0; i < Options.length; i++) {
             let CurrentOption = Options[i]
             let HTMLtext = CurrentOption.querySelector("div").innerHTML
+            console.log(SingleQuoteText(HTMLtext))
 
-            Answers.push(SingleQuoteText(HTMLtext))
+            if (!Debugging) { Answers.push(SingleQuoteText(HTMLtext)) }
         }
     }
     if (Cards.length > 0) {
         for (let i = 0; i < Cards.length; i++) {
             let CurrentCard = Cards[i]
             let HTMLtext = CurrentCard.querySelector("div").innerHTML
+            console.log(SingleQuoteText(HTMLtext))
 
-            Answers.push(SingleQuoteText(HTMLtext))
+            if (!Debugging) { Answers.push(SingleQuoteText(HTMLtext)) }
         }
     }
     if (Inputs.length > 0) {
         for (let i = 0; i < Inputs.length; i++) {
             let CurrentInput = Inputs[i]
+            console.log(CurrentInput.value)
 
-            Answers.push(CurrentInput.value)
+            if (!Debugging) { Answers.push(CurrentInput.value) }
         }
     }
 
     return Answers.join(", ")
 }
+document.addEventListener('keydown', function (event) {
+    if (event.keyCode === 9) {
+        event.preventDefault();
+        GetAnswers(true)
+    }
+});
+
 var Question
 function BaseButtonClick() {
     //console.log("FLAPODOODLE")
     try {
-        document.querySelector("._ButtonBase_10evl_1._ButtonContained_10evl_81").onclick = function() {
+        document.querySelector('[class*="_ButtonBase_"][class*="_ButtonContained_"]').onclick = function() {
+            console.log(this.textContent)
             if (this.textContent == "Answer") {
                 try {
-                    QuestionElement = document.querySelector('#before [class^="_TextElement_"]')
+                    QuestionElement = document.querySelector('#before [class*="_Question_"]')
                     Question = QuestionElement.innerHTML
+                    console.log(Question)
                 }
                 catch {
-                    QuestionElement = document.querySelector('[class^="_TextElement_"]')
+                    QuestionElement = document.querySelector('[class*="_Question_"]')
                     Question = QuestionElement.innerHTML
+                    console.log(Question)
                 }
             }
             if (this.textContent == "Submit answer") {
-                let NewCode = document.querySelector("._Chip_bu06u_1").textContent.split(": ")[1]
+                let NewCode = document.querySelector('[class*="_Chip_"]').textContent.split(": ")[1]
                 
                 let NewBookwork = {
                     "code": NewCode,
@@ -361,7 +376,7 @@ function BaseButtonClick() {
                 setInterval(function() {
                     if (KeepChecking) {
                         try {
-                            let Result = document.querySelector('[class^="_ResultMessage_"]').textContent
+                            let Result = document.querySelector('[class*="_ResultMessage_"]').textContent
                             KeepChecking = false
         
                             if (Result == "Correct!") {
@@ -385,12 +400,12 @@ function AddPseudoPages() {
     let isMath
     try {
         isMath = true
-        document.querySelector("._LQDContainer_1v01e_1").id = "before"
+        document.querySelector('[class*="_LQDContainer_"]').id = "before"
     }
     catch {
         try {
             isMath = false
-            document.querySelector("._PageBackground_1qeyl_1").id = "before"
+            document.querySelector('[class*="_PageBackground_"]').id = "before"
         }
         catch{StartComplete = false}
     }
@@ -435,7 +450,7 @@ function GetTimeElapsed() {
 }
 function AddTimers() {
     if (!ClocksDone) {
-        let TimerShell = document.querySelector("._StudentInfoContainer_4fjt9_66")
+        let TimerShell = document.querySelector('[class*="_StudentInfoContainer_"]')
     
         let Clock = document.createElement("div")
         Clock.classList.add("_XPCount_4fjt9_78")
@@ -449,8 +464,8 @@ function AddTimers() {
         TimerShell.appendChild(Stopwatch)
     
         function UpdateTimers() {
-            let Clock = document.querySelector("._XPCount_4fjt9_78.clock")
-            let Stopwatch = document.querySelector("._XPCount_4fjt9_78.stopwatch")
+            let Clock = document.querySelector('[class*="_XPCount_"].clock')
+            let Stopwatch = document.querySelector('[class*="_XPCount_"].stopwatch')
     
             Clock.textContent = GetCurrentTime(true)
             Stopwatch.textContent = GetTimeElapsed()
@@ -472,7 +487,7 @@ function Gobledegook(length) {
     return randomString;
 }
 function NameMuffler() {
-    let UsernameElement = document.querySelector("._HiddenAt_gk0gx_1")
+    let UsernameElement = document.querySelector('[class*="_HiddenAt_"]')
     let NewUsername = JSON.parse(localStorage.getItem("UserPrefs"))["NameMuffler"]
     if (NewUsername == "Random") { NewUsername = Gobledegook(10) }
     UsernameElement.textContent = NewUsername
@@ -529,6 +544,12 @@ function CSSboiler() {
         border: 4px dashed orange;
         border-radius: 5px
     }
+    [class*="_CalculatorInfoContainer_"] {
+        cursor: pointer;
+    }
+    [class*="_CalculatorInfoContainer_"]:hover p {
+        text-decoration: underline;
+    }
     `
     let NewStyle = document.createElement("style")
     NewStyle.innerHTML = NewStyleText
@@ -538,7 +559,7 @@ function CSSboiler() {
 
 function BookworkCheck() {
     try {
-        let Code = document.querySelector("._Chip_bu06u_1").textContent.split(" ")[1]
+        let Code = document.querySelector('[class*="_Chip_"]').textContent.split(" ")[1]
         if (Code != undefined && Code != null) {
             let BookworkArray = JSON.parse(localStorage.getItem("BookworkArray"))
 
@@ -549,13 +570,13 @@ function BookworkCheck() {
                 }
             }
 
-            let OptionOuters = document.querySelectorAll('[class^="_WACGridOption_"]')
+            let OptionOuters = document.querySelectorAll('[class*="_WACGridOption_"]')
             for (let i = 0; i < OptionOuters.length; i++) {
                 let EveryDiv = OptionOuters[i].getElementsByTagName("*")
                 for (let j = 0; j < EveryDiv.length; j++) {
                     for (let o = 0; o < FittingHTML.length; o++) {
                         if (EveryDiv[j].innerHTML == FittingHTML[o]) {
-                            EveryDiv[j].closest('[class^="_WACGridOption_"]').classList.add("selected-option")
+                            EveryDiv[j].closest('[class*="_WACGridOption_"]').classList.add("selected-option")
                         }
                     }
                 }
@@ -630,7 +651,7 @@ function InitializeCanvas() {
 }
 function LinkCheck() {
     try {
-        let Titles = document.querySelectorAll('[class^="_Title_"]')
+        let Titles = document.querySelectorAll('[class*="_Title_"]')
         for (let i = 0; i < Titles.length; i++) {
             if (Titles[i].textContent == "Something has gone wrong.") {
                 window.open("https://www.sparxmaths.uk/student/homework", "_self")
@@ -657,7 +678,7 @@ function StartLoop() {
     let UserPrefs = JSON.parse(localStorage.getItem("UserPrefs")) || {
         "RemoveCompletedHomework": true,
         "AddUserSelect": true,  
-        "Timers": true,
+        "Timers": false,
         "NameMuffler": "",
         "Canvas": true,
     }
@@ -673,6 +694,8 @@ function StartLoop() {
             }
             NewMenuItems.push(["Homework", "homework"])
             NewMenuItems.push(["Back", "before"])
+            NewMenuItems.push(["AI", "ai"])
+            NewMenuItems.push(["Tools", "tools"])
             NewMenuItems.push(["Bookworks", "bookworks"])
             NewMenuItems.push(["Settings", "settings"])
     
@@ -686,7 +709,7 @@ function StartLoop() {
             CSSboiler()
             
             StartComplete = true
-            document.querySelector("._PageBackgroundImage_1qeyl_21").remove()
+            document.querySelector('[class*="_PageBackgroundImage_"]').remove()
 
         }
         catch (e) {
@@ -699,6 +722,8 @@ function Loop() {
     BaseButtonClick()
     BookworkCheck()
     LinkCheck()
+    
+    try { document.querySelector('[class*="_CalculatorInfoContainer_"]').remove() }catch{}
 }
 setInterval(Loop, 250) 
 
