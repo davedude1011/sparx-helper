@@ -5,6 +5,8 @@ Sparx Helper is a Chrome extension designed to enhance your Sparx Maths journey 
 
 ## Features
 - **Automatic Bookwork Logging and Check filling**
+- **Built in calculator, graphing tool ect**
+- **Built in AI chatbot**
 - **Drawing Mode**
 - **Text Selection**
 - **Custom Themes**
