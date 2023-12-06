@@ -567,6 +567,8 @@ function BookworkCheck() {
             for (let i = 0; i < BookworkArray.length; i++) {
                 if (BookworkArray[i].code == Code) {
                     FittingHTML.push(BookworkArray[i].answer)
+                    document.querySelector('[class*="_Chip_"]').innerHTML = BookworkArray[i].answer
+                    document.querySelector('[class*="_Subtitle_"]').textContent = "A little hint :)"
                 }
             }
 
@@ -583,7 +585,9 @@ function BookworkCheck() {
             }
         }
     }
-    catch{}
+    catch{
+        console.log("LIUGHBRUKYGHBRKYIU")
+    }
 }
 function InitializeCanvas() {
     document.addEventListener('contextmenu', function(event) {
