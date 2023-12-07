@@ -21,7 +21,7 @@ Sparx Helper is a Chrome extension designed to enhance Sparx Maths by providing 
 5. Click on "Load unpacked" and select the extracted folder to install Sparx Helper.
 
 ## Installation (Mobile)
-1. Install the Kiwi Browser from your mobile app store (available on Android and Apple App Store).
+1. Install the Kiwi Browser from your mobile app store (available on Android).
 2. Download the latest version from [here](https://github.com/davedude1011/sparx-helper/archive/refs/tags/v1.2.1.zip), or from the releases tab.
 3. Open the Kiwi Browser and go to the menu.
 4. Select "Extensions" from the menu.
