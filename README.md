@@ -1,7 +1,7 @@
 # **${\textsf{\color{#e04a59}DISCLAIMER}}$**
 ## This Project will NOT recieve any updates, check out the updated project here:
 ### [Chrome Web Store](https://chromewebstore.google.com/detail/task-tackler/knmelikahkhldfnmafmlikolknhekkmp)
-### [Github Repo](https://github.com/davedude1011/sparx-helper/archive/refs/tags/v1.2.1.zip)
+### [Github Repo](https://github.com/davedude1011/Homework-Helper)
 
 <br><br>
 
